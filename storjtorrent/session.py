@@ -143,8 +143,8 @@ class Session(object):
             self.handles[:] = [handle for handle in self.handles
                                if handle != torrent_handle]
 
-    def add_torrent(self, torrent_location, max_connections=60,
-                    max_uploads=-1, seeding=False):
+    def add_torrent(self, torrent_location, max_connections=60, max_uploads=-1,
+                    seeding=False, save_path=None):
         """ Add a new torrent to be managed by the libtorrent session.
 
         :param torrent_location: The location of the torrent file. Torrent file
@@ -175,7 +175,7 @@ class Session(object):
                 'You must have at least two connections per torrent.')
 
         atp = {}
-        atp['save_path'] = self.save_path
+        atp['save_path'] = save_path if save_path is not None else self.save_path
         atp['storage_mode'] = lt.storage_mode_t.storage_mode_sparse
         atp['paused'] = False
         atp['auto_managed'] = True
